@@ -25,7 +25,7 @@ extern "C" {
 	INT32 DEEDEEAPI DeedeeDocCut(void *doc, int fullcut);
 
 // print interface
-	INT32 DEEDEEAPI DeedeePrint(LPWSTR printerName, const void* doc);
+	INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc);
 
 
 

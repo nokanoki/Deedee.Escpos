@@ -1,5 +1,6 @@
 #include "Deedee.Escpos.h"
 #include "Deedee.EscposDocument.h"
+#include <string>
 
 #define asDoc(doc) ((EscposDocument*)doc)
 
@@ -54,17 +55,20 @@ INT32 DEEDEEAPI DeedeeDocCut(void * doc, int fullcut)
 
 
 
-INT32 DEEDEEAPI DeedeePrint(LPWSTR printerName, const void* doc)
+INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc)
 {
 	DOC_INFO_1 docInfo = {};
 	docInfo.pDatatype = __TEXT("RAW");
 	docInfo.pDocName = __TEXT("deedeedoc");
+	WCHAR printerName0[512] = { 0 };
+	wcscpy_s(printerName0, printerName);
 
 	const EscposDocument *d = (EscposDocument*)doc;
 	INT32 error = 0;
 
 	HANDLE hPrinter = NULL;
-	if (!OpenPrinter(printerName, &hPrinter, NULL))
+	//dafuq non-constant name
+	if (!OpenPrinter(printerName0, &hPrinter, NULL))
 		return -1;
 	if (StartDocPrinter(hPrinter, 1, (BYTE*)&docInfo))
 	{
