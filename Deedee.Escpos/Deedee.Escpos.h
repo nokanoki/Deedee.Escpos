@@ -20,6 +20,9 @@ extern "C" {
 	INT32 DEEDEEAPI DeedeeDocCreate(void **doc);
 	INT32 DEEDEEAPI DeedeeDocDestroy(void *doc);
 	INT32 DEEDEEAPI DeedeeDocWrite(void *doc, const wchar_t* str);
+	INT32 DEEDEEAPI DeedeeDocFeedLines(void *doc, int lines);
+	INT32 DEEDEEAPI DeedeeDocFeed(void *doc);
+	INT32 DEEDEEAPI DeedeeDocCut(void *doc, int fullcut);
 
 // print interface
 	INT32 DEEDEEAPI DeedeePrint(LPWSTR printerName, const void* doc);

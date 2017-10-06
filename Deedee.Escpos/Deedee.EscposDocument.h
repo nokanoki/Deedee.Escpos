@@ -11,8 +11,12 @@ public:
 	EscposDocument();
 	~EscposDocument();
 	void Write(const wchar_t* str);
+	void Feed(int lines = 1);
+	void Cut(bool fullCut = 0);
+
 
 	size_t GetBufferSize() const;
 	const unsigned char* GetBufferPointer() const;
+
 
 };

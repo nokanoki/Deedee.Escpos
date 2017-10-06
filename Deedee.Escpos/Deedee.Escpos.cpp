@@ -1,7 +1,7 @@
 #include "Deedee.Escpos.h"
 #include "Deedee.EscposDocument.h"
 
-
+#define asDoc(doc) ((EscposDocument*)doc)
 
 INT32 DEEDEEAPI DeedeeDocCreate(void ** doc)
 {
@@ -33,6 +33,26 @@ INT32 DEEDEEAPI DeedeeDocWrite(void * doc, const wchar_t * str)
 
 	return 0;
 }
+
+INT32 DEEDEEAPI DeedeeDocFeedLines(void * doc, int lines)
+{
+	asDoc(doc)->Feed(lines);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocFeed(void * doc)
+{
+	asDoc(doc)->Feed(1);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocCut(void * doc, int fullcut)
+{
+	asDoc(doc)->Cut(fullcut);
+	return 0;
+}
+
+
 
 INT32 DEEDEEAPI DeedeePrint(LPWSTR printerName, const void* doc)
 {
