@@ -1,0 +1,32 @@
+#pragma once
+#include <Windows.h>
+
+#if DEEDEEESCPOS_EXPORTS
+#define EXPORT __declspec(dllexport)
+#else
+#define EXPORT __declspec(dllimport)
+#endif 
+#define DEEDEEAPI __stdcall
+
+
+
+
+
+
+#if __cplusplus
+extern "C" {
+#endif
+// doc interface
+	INT32 DEEDEEAPI DeedeeDocCreate(void **doc);
+	INT32 DEEDEEAPI DeedeeDocDestroy(void *doc);
+	INT32 DEEDEEAPI DeedeeDocWrite(void *doc, const wchar_t* str);
+
+// print interface
+	INT32 DEEDEEAPI DeedeePrint(LPWSTR printerName, const void* doc);
+
+
+
+
+#if __cplusplus
+}
+#endif
