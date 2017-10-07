@@ -4,6 +4,7 @@
 
 #define asDoc(doc) ((EscposDocument*)doc)
 
+
 INT32 DEEDEEAPI DeedeeDocCreate(void ** doc)
 {
 	void *tmp = new EscposDocument();
@@ -50,6 +51,60 @@ INT32 DEEDEEAPI DeedeeDocFeed(void * doc)
 INT32 DEEDEEAPI DeedeeDocCut(void * doc, int fullcut)
 {
 	asDoc(doc)->Cut(fullcut);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocReverseFeed(void * doc, int lines)
+{
+	asDoc(doc)->ReverseFeed(lines);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetPrinterCodePage(void *doc, int codePage)
+{
+	asDoc(doc)->SetPrinterCodePage(codePage);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetCodePage(void * doc, int codePage)
+{
+	asDoc(doc)->SetDocumentCodePage(codePage);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetJustificationMode(void * doc, int mode)
+{
+	asDoc(doc)->SetJustificationMode(mode);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetUnderlineMode(void * doc, int mode)
+{
+	asDoc(doc)->SetUnderline(mode);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetEmphasized(void * doc, int enable)
+{
+	asDoc(doc)->SetEmphasizedMode(enable);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetFont(void * doc, int font)
+{
+	asDoc(doc)->SetFont(font);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocReset(void * doc)
+{
+	asDoc(doc)->Reset();
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetDoubleStrike(void * doc, int enable)
+{
+	asDoc(doc)->SetDoubleStrike(enable);
 	return 0;
 }
 
