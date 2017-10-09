@@ -42,10 +42,12 @@ int main(int, char)
 	DeedeeDocWrite(doc, L"12345678901");
 	DeedeeDocFeed(doc);
 	auto qrText = L"Test test ΤΕστ τεστ";
+	DeedeeDocCut(doc, 1);
 	DeedeeDocSetCodePage(doc, 65001);//utf8
 	//DeedeeDocWriteQR(doc, DEEDEEDOC_QR_MICRO, DEEDEEDOC_QR_CORR_L, qrText);
 	DeedeeDocWriteQR1(doc,5, 3, qrText);
 	DeedeeDocSetCodePage(doc,737);
+	
 	DeedeeDocWrite(doc,qrText);
 	DeedeeDocFeed(doc);
 	
