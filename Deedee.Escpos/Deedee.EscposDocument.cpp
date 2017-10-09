@@ -13,7 +13,7 @@ EscposDocument::~EscposDocument()
 void EscposDocument::Write(const wchar_t * str)
 {
 	
-	auto sz = WideCharToMultiByte(this->codePage, 0, str, -1, NULL, 0, NULL, NULL);
+	auto sz = this->ByteSize(str);
 	auto tmp = new unsigned char[sz];
 	auto res = WideCharToMultiByte(this->codePage, 0, str, -1, (char*)tmp, sz, NULL, NULL);
 	if (res < 1)
@@ -129,7 +129,7 @@ void EscposDocument::SetPrintMode(int font, bool bold, bool doubleHeight, bool d
 
 void EscposDocument::WriteBarcode(int encoding, const wchar_t * str)
 {
-	auto sz = wcslen(str);
+	auto sz = this->ByteSize(str) - 1;
 	bool isAllDigits = true;
 	bool isAllAlphaCaps = true;
 	for (const wchar_t* i = str; *i ; i++)
@@ -179,6 +179,92 @@ void EscposDocument::WriteBarcode(int encoding, const wchar_t * str)
 
 }
 
+void EscposDocument::WriteQR(int model, int correctionLevel, const wchar_t * str)
+{
+	auto sz = this->ByteSize(str);
+	auto pL = sz % 256;
+	auto pH = sz / 256;
+
+
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x28);
+	this->buffer.push_back(0x6b);
+	this->buffer.push_back(pL);
+	this->buffer.push_back(pH);
+	this->buffer.push_back(0x31);
+	this->buffer.push_back(0x50);
+	this->buffer.push_back(0x30);
+
+	this->Write(str);
+	
+	//set model
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x28);
+	this->buffer.push_back(0x6b);
+	this->buffer.push_back(0x04);
+	this->buffer.push_back(0);
+	this->buffer.push_back(0x31);
+	this->buffer.push_back(0x41);
+	this->buffer.push_back(0x31);// (model);
+	this->buffer.push_back(0);
+
+	//set size
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x28);
+	this->buffer.push_back(0x6b);
+	this->buffer.push_back(0x03);
+	this->buffer.push_back(0);
+	this->buffer.push_back(0x31);
+	this->buffer.push_back(0x43);
+	this->buffer.push_back(0x03);//<-dot size
+
+	//set error correction
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x28);
+	this->buffer.push_back(0x6b);
+	this->buffer.push_back(0x03);
+	this->buffer.push_back(0);
+	this->buffer.push_back(0x31);
+	this->buffer.push_back(0x45);
+	this->buffer.push_back(0x33);//(correctionLevel);
+
+	
+	
+	//print
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x28);
+	this->buffer.push_back(0x6b);
+	this->buffer.push_back(0x03);
+	this->buffer.push_back(0);
+	this->buffer.push_back(0x31);
+	this->buffer.push_back(0x51);
+	this->buffer.push_back(0x30);
+
+	
+
+
+}
+
+void EscposDocument::WriteQR1(int magnification, int correction, const wchar_t* str)
+{
+	auto sz = ByteSize(str) -1;
+	
+
+
+	this->buffer.push_back(0x1b);
+	this->buffer.push_back(0x61);
+	this->buffer.push_back(0);
+
+	this->buffer.push_back(27);
+	this->buffer.push_back(90);
+	this->buffer.push_back(1);//version
+	this->buffer.push_back(correction);//correction
+	this->buffer.push_back(magnification);//magnification
+	this->buffer.push_back(sz & 0xff);
+	this->buffer.push_back((sz & 0xff00) >> 8);
+	this->Write(str);
+}
+
 size_t EscposDocument::GetBufferSize() const
 {
 	return this->buffer.size();
@@ -187,4 +273,10 @@ size_t EscposDocument::GetBufferSize() const
 const unsigned char * EscposDocument::GetBufferPointer() const
 {
 	return buffer.data();
+}
+
+int EscposDocument::ByteSize(const wchar_t * str)
+{
+	int sz = WideCharToMultiByte(this->codePage, 0, str, -1, NULL, 0, NULL, NULL);
+	return sz;
 }

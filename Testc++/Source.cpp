@@ -39,8 +39,16 @@ int main(int, char)
 	DeedeeDocPrintMode(doc, 0, 0, 0, 0);
 	DeedeeDocWriteBarcode(doc, DEEDEEDOC_BARCODE_CODE39, L"12345678901");
 	DeedeeDocFeed(doc);
-	//DeedeeDocReset(doc);
-	DeedeeDocWrite(doc, L"12345678901\n");
+	DeedeeDocWrite(doc, L"12345678901");
+	DeedeeDocFeed(doc);
+	auto qrText = L"Test test ÔÅóô ôåóô";
+	DeedeeDocSetCodePage(doc, 65001);//utf8
+	//DeedeeDocWriteQR(doc, DEEDEEDOC_QR_MICRO, DEEDEEDOC_QR_CORR_L, qrText);
+	DeedeeDocWriteQR1(doc,5, 3, qrText);
+	DeedeeDocSetCodePage(doc,737);
+	DeedeeDocWrite(doc,qrText);
+	DeedeeDocFeed(doc);
+	
 	DeedeeDocCut(doc, 1);
 
 
@@ -56,3 +64,13 @@ int main(int, char)
 	res = DeedeeDocDestroy(doc);
 	return 0;
 }
+/*
+protected function wrapperSend2dCodeData($fn, $cn, $data = '', $m = '')
+{
+if (strlen($m) > 1 || strlen($cn) != 1 || strlen($fn) != 1) {
+throw new InvalidArgumentException("wrapperSend2dCodeData: cn and fn must be one character each.");
+}
+$header = $this -> intLowHigh(strlen($data) + strlen($m) + 2, 2);
+$this -> connector -> write(self::GS . "(k" . $header . $cn . $fn . $m . $data);
+}
+*/

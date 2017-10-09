@@ -127,6 +127,18 @@ INT32 DEEDEEAPI DeedeeDocWriteBarcode(void * doc, int barcodeEncoding, const wch
 	return 0;
 }
 
+INT32 DEEDEEAPI DeedeeDocWriteQR(void * doc, int model, int correction, const wchar_t * str)
+{
+	asDoc(doc)->WriteQR(model, correction, str);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocWriteQR1(void * doc, int magnification, int correction, const wchar_t * str)
+{
+	asDoc(doc)->WriteQR1(magnification, correction, str);
+	return 0;
+}
+
 
 
 INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc)

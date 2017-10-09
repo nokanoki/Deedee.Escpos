@@ -16,6 +16,14 @@
 #define DEEDEEDOC_BARCODE_ITF	5
 #define DEEDEEDOC_BARCODE_NW7	6
 
+#define DEEDEEDOC_QR_MODEL_1	49
+#define DEEDEEDOC_QR_MODEL_2	50
+#define DEEDEEDOC_QR_MICRO		51
+
+#define DEEDEEDOC_QR_CORR_L		48
+#define DEEDEEDOC_QR_CORR_M		49
+#define DEEDEEDOC_QR_CORR_Q		50
+#define DEEDEEDOC_QR_CORR_H		51
 
 
 #if __cplusplus
@@ -57,7 +65,15 @@ extern "C" {
 	*/
 	INT32 DEEDEEAPI DeedeeDocPrintMode(void* doc,int font, int bold, int doubleHeight, int doubleWidth);
 	INT32 DEEDEEAPI DeedeeDocWriteBarcode(void* doc, int barcodeEncoding, const wchar_t* str);
+	//Standar esc/pos command
+	INT32 DEEDEEAPI DeedeeDocWriteQR(void* doc, int model, int correction, const wchar_t* str);
+	/*
+		work on some OEM printers,
+		magnification => zoom in dots
+		correction => correction level 1 to ???? its works with 3
 
+	*/
+	INT32 DEEDEEAPI DeedeeDocWriteQR1(void* doc, int magnification, int correction, const wchar_t* str);
 // print interface
 	INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc);
 

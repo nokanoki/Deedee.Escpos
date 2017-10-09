@@ -31,11 +31,16 @@ public:
 	void SetReverseColor(bool enanle);
 	void SetPrintMode(int font, bool bold, bool doubleHeight, bool doubleWidth);
 	void WriteBarcode(int encoding, const wchar_t* str);
+	void WriteQR(int model,int correctionLevel, const wchar_t* str);
+	void WriteQR1(int magnification, int correction, const wchar_t *str);
 
 
 
 	size_t GetBufferSize() const;
 	const unsigned char* GetBufferPointer() const;
+
+private:
+	int ByteSize(const wchar_t* str);
 
 
 };
