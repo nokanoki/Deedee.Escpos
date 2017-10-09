@@ -111,6 +111,74 @@ void EscposDocument::SetReverseColor(bool enanle)
 	this->buffer.push_back(enanle);
 }
 
+void EscposDocument::SetPrintMode(int font, bool bold, bool doubleHeight, bool doubleWidth)
+{
+	this->buffer.push_back(0x1b);
+	this->buffer.push_back(0x21);
+	unsigned char bits = 0;
+	if (font)
+		bits |= 1;
+	if (bold)
+		bits |= 1 << 3;
+	if (doubleHeight)
+		bits |= 1 << 4;
+	if (doubleWidth)
+		bits |= 1 << 5;
+	this->buffer.push_back(bits);
+}
+
+void EscposDocument::WriteBarcode(int encoding, const wchar_t * str)
+{
+	auto sz = wcslen(str);
+	bool isAllDigits = true;
+	bool isAllAlphaCaps = true;
+	for (const wchar_t* i = str; *i ; i++)
+	{
+		if(isAllAlphaCaps)
+			isAllDigits = iswalnum(*i);
+		if (isAllAlphaCaps)
+			isAllAlphaCaps = (*i >= L'A' && *i <= L'Z');
+	}
+	switch (encoding)
+	{
+	case 0:
+	case 1: 
+		if (!(isAllDigits && (sz == 11 || sz == 12))) 
+			throw new std::exception("input fails");
+		break;
+	case 2: 
+		if (!(isAllDigits && (sz == 7 || sz == 8))) 
+			throw new std::exception("input fails");
+		break;
+	case 3: 
+		if (!(isAllDigits && (sz == 11 || sz == 12)))
+			throw new std::exception("input fails");
+		break;
+	case 4: 
+		if (!((isAllDigits || isAllAlphaCaps) )) 
+			throw new std::exception("input fails");
+		break;
+	case 5:
+		if (!isAllDigits && !(sz % 2)) 
+			throw new std::exception("input fails.");
+		break;
+	case 6: 
+		throw new std::exception("validator not impl");
+		break;
+
+	default:
+		throw new std::exception("encoding not impl");
+		break;
+	}
+	
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x6b);
+	this->buffer.push_back(encoding);
+	this->Write(str);
+	this->buffer.push_back(0);
+
+}
+
 size_t EscposDocument::GetBufferSize() const
 {
 	return this->buffer.size();

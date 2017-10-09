@@ -34,6 +34,13 @@ int main(int, char)
 	DeedeeDocWrite(doc, L"test doublestrike\n");
 	DeedeeDocSetDoubleStrike(doc, 0);
 	DeedeeDocWrite(doc, L"Αλαμπουρνεζικα Αα Ββ Γγ\n");
+	DeedeeDocPrintMode(doc, 0, 1, 1, 1);
+	DeedeeDocWrite(doc, L"big BIG\n");
+	DeedeeDocPrintMode(doc, 0, 0, 0, 0);
+	DeedeeDocWriteBarcode(doc, DEEDEEDOC_BARCODE_CODE39, L"12345678901");
+	DeedeeDocFeed(doc);
+	//DeedeeDocReset(doc);
+	DeedeeDocWrite(doc, L"12345678901\n");
 	DeedeeDocCut(doc, 1);
 
 

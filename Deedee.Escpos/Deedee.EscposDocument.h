@@ -2,6 +2,8 @@
 #include <vector>
 #include <Windows.h>
 
+
+
 class EscposDocument
 {
 private:
@@ -26,8 +28,10 @@ public:
 	void SetFont(int font);
 	//0 left, 1 center 2 right
 	void SetJustificationMode(int mode);
-
 	void SetReverseColor(bool enanle);
+	void SetPrintMode(int font, bool bold, bool doubleHeight, bool doubleWidth);
+	void WriteBarcode(int encoding, const wchar_t* str);
+
 
 
 	size_t GetBufferSize() const;

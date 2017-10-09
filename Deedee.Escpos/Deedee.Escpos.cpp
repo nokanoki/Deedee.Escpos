@@ -108,6 +108,25 @@ INT32 DEEDEEAPI DeedeeDocSetDoubleStrike(void * doc, int enable)
 	return 0;
 }
 
+INT32 DEEDEEAPI DeedeeDocPrintMode(void* doc,int font, int bold, int doubleHeight, int doubleWidth)
+{
+	asDoc(doc)->SetPrintMode(font, bold, doubleHeight, doubleWidth);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocWriteBarcode(void * doc, int barcodeEncoding, const wchar_t * str)
+{
+	try
+	{
+		asDoc(doc)->WriteBarcode(barcodeEncoding, str);
+	}
+	catch (std::exception &e)
+	{
+		return 1;
+	}
+	return 0;
+}
+
 
 
 INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc)

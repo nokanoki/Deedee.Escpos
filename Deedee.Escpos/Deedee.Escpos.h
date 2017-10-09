@@ -8,7 +8,13 @@
 #endif 
 #define DEEDEEAPI __stdcall
 
-
+#define DEEDEEDOC_BARCODE_UPC_A 0
+#define DEEDEEDOC_BARCODE_UPC_E 1
+#define DEEDEEDOC_BARCODE_JAN13 2
+#define DEEDEEDOC_BARCODE_JAN8	3
+#define DEEDEEDOC_BARCODE_CODE39 4
+#define DEEDEEDOC_BARCODE_ITF	5
+#define DEEDEEDOC_BARCODE_NW7	6
 
 
 
@@ -46,7 +52,11 @@ extern "C" {
 	//reset to default
 	INT32 DEEDEEAPI DeedeeDocReset(void *doc);
 	INT32 DEEDEEAPI DeedeeDocSetDoubleStrike(void *doc, int enable);
-
+	/*
+		font [0 => font A, 1 => font B]
+	*/
+	INT32 DEEDEEAPI DeedeeDocPrintMode(void* doc,int font, int bold, int doubleHeight, int doubleWidth);
+	INT32 DEEDEEAPI DeedeeDocWriteBarcode(void* doc, int barcodeEncoding, const wchar_t* str);
 
 // print interface
 	INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc);
