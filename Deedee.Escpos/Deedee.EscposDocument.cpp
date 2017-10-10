@@ -265,6 +265,23 @@ void EscposDocument::WriteQR1(int magnification, int correction, const wchar_t* 
 	this->Write(str);
 }
 
+void EscposDocument::SetLeftMargin(int i)
+{
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x4c);
+	this->buffer.push_back(i & 0xff);
+	this->buffer.push_back((i & 0xff00) >> 8);
+}
+
+void EscposDocument::SetPrintableAreaWidth(int i)
+{
+	this->buffer.push_back(0x1d);
+	this->buffer.push_back(0x57);
+	this->buffer.push_back(i & 0xff);
+	this->buffer.push_back((i & 0xff00) >> 8);
+
+}
+
 size_t EscposDocument::GetBufferSize() const
 {
 	return this->buffer.size();

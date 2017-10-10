@@ -34,7 +34,8 @@ public:
 	void WriteQR(int model,int correctionLevel, const wchar_t* str);
 	void WriteQR1(int magnification, int correction, const wchar_t *str);
 
-
+	void SetLeftMargin(int i);
+	void SetPrintableAreaWidth(int i);
 
 	size_t GetBufferSize() const;
 	const unsigned char* GetBufferPointer() const;

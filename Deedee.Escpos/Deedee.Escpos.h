@@ -26,6 +26,10 @@
 #define DEEDEEDOC_QR_CORR_H		51
 
 
+
+
+
+
 #if __cplusplus
 extern "C" {
 #endif
@@ -74,7 +78,18 @@ extern "C" {
 
 	*/
 	EXPORT INT32 DEEDEEAPI DeedeeDocWriteQR1(void* doc, int magnification, int correction, const wchar_t* str);
-// print interface
+	EXPORT INT32 DEEDEEAPI DeedeeDocSetLeftMargin(void* doc, int val);
+	EXPORT INT32 DEEDEEAPI DeedeeDocSetPrintableAreaWidth(void* doc, int va);
+	
+	// tableformmater interface
+	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterCreate(void** table);
+	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterDestroy(void* table);
+	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterDefineColumn(void* table, int size);
+	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterAddColumnContent(void* table,int idx, int justification, const wchar_t* str);
+	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterAddRow(void* table);
+	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterGetBuffer(void* table, const wchar_t** buffer, size_t* size);
+
+	// print interface
 	EXPORT INT32 DEEDEEAPI DeedeePrint(const wchar_t* printerName, const void* doc);
 
 
@@ -83,3 +98,4 @@ extern "C" {
 #if __cplusplus
 }
 #endif
+

@@ -1,8 +1,10 @@
 #include "Deedee.Escpos.h"
 #include "Deedee.EscposDocument.h"
+#include "Deedee.TableFormatter.h"
 #include <string>
 
 #define asDoc(doc) ((EscposDocument*)doc)
+#define asTable(table) ((TableFormatter*)table)
 
 
 INT32 DEEDEEAPI DeedeeDocCreate(void ** doc)
@@ -136,6 +138,55 @@ INT32 DEEDEEAPI DeedeeDocWriteQR(void * doc, int model, int correction, const wc
 INT32 DEEDEEAPI DeedeeDocWriteQR1(void * doc, int magnification, int correction, const wchar_t * str)
 {
 	asDoc(doc)->WriteQR1(magnification, correction, str);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetLeftMargin(void * doc, int val)
+{
+	asDoc(doc)->SetLeftMargin(val);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeDocSetPrintableAreaWidth(void * doc, int val)
+{
+	asDoc(doc)->SetPrintableAreaWidth(val);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeTableFormatterCreate(void ** table)
+{
+	(*table) = new TableFormatter();
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeTableFormatterDestroy(void * table)
+{
+	delete asTable(table);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeTableFormatterDefineColumn(void * table, int size)
+{
+	asTable(table)->DefineColumns(size);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeTableFormatterAddColumnContent(void * table, int idx, int justification, const wchar_t * str)
+{
+	asTable(table)->SetColumnContent(idx, str, justification);
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeTableFormatterAddRow(void * table)
+{
+	asTable(table)->AddRow();
+	return 0;
+}
+
+INT32 DEEDEEAPI DeedeeTableFormatterGetBuffer(void * table, const wchar_t ** buffer, size_t * size)
+{
+	(*buffer) = asTable(table)->GetBufferPointer();
+	(*size) = asTable(table)->GetBufferSize();
 	return 0;
 }
 

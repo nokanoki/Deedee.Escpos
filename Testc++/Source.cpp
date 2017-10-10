@@ -2,6 +2,8 @@
 
 #pragma comment(lib, "..\\Debug\\Deedee.Escpos.lib")
 
+#include <string>
+#include <iostream>
 
 int main(int, char)
 {
@@ -9,11 +11,43 @@ int main(int, char)
 
 
 	void* doc = 0;
-	WCHAR printerName[] = L"POS-80";
+	void* table = 0;
+	DeedeeTableFormatterCreate(&table);
+	DeedeeTableFormatterDefineColumn(table, 10);
+	DeedeeTableFormatterDefineColumn(table, 15);
+	DeedeeTableFormatterDefineColumn(table, 10);
+
+	DeedeeTableFormatterAddColumnContent(table, 0, 0, L"1st");
+	DeedeeTableFormatterAddColumnContent(table, 1, 0, L"2nd");
+	DeedeeTableFormatterAddColumnContent(table, 2, 0, L"3st");
+	DeedeeTableFormatterAddRow(table);
+
+	DeedeeTableFormatterAddColumnContent(table, 0, 0, L"1stn");
+	DeedeeTableFormatterAddColumnContent(table, 1, 0, L"2ndn");
+	DeedeeTableFormatterAddColumnContent(table, 2, 0, L"3stn");
+	DeedeeTableFormatterAddRow(table);
+
+	DeedeeTableFormatterAddColumnContent(table, 0, 1, L"1st");
+	DeedeeTableFormatterAddColumnContent(table, 1, 1, L"2nd");
+	DeedeeTableFormatterAddColumnContent(table, 2, 1, L"3st");
+	DeedeeTableFormatterAddRow(table);
+
+	DeedeeTableFormatterAddColumnContent(table, 0, 2, L"1stn");
+	DeedeeTableFormatterAddColumnContent(table, 1, 2, L"2ndn");
+	DeedeeTableFormatterAddColumnContent(table, 2, 2, L"3stn");
+	DeedeeTableFormatterAddRow(table);
+
+	const wchar_t *str = 0;
+	size_t size = 0;
+	DeedeeTableFormatterGetBuffer(table, &str, &size);
+
+	std::wstring testTable(str, str + size);
+	std::wcout << testTable;
+
 	res = DeedeeDocCreate(&doc);
 	DeedeeDocReset(doc);
 	//DeedeeDocSetFont(doc, 2);
-	DeedeeDocSetPrinterCodePage(doc, 64);//737
+	/*DeedeeDocSetPrinterCodePage(doc, 64);//737
 	DeedeeDocSetCodePage(doc, 737);
 	
 	DeedeeDocWrite(doc, L"test left\n");
@@ -52,17 +86,18 @@ int main(int, char)
 	DeedeeDocFeed(doc);
 	
 	DeedeeDocCut(doc, 1);
+	*/
+	DeedeeDocSetJustificationMode(doc, 1);
+	DeedeeDocWrite(doc, testTable.c_str());
 
 
 
-
-
-	//res = DeedeeDocFeed(doc);
+	res = DeedeeDocFeed(doc);
 	res = DeedeeDocCut(doc, 0);
 	//res = DeedeeDocWrite(doc, L"test ÙÑÅÅÅÅåëáëåát");
 	//res = DeedeeDocFeedLines(doc, 3);
 	//res = DeedeeDocCut(doc, 1);
-	res = DeedeePrint((LPWSTR)printerName, doc);
+	res = DeedeePrint(L"POS-80", doc);
 	res = DeedeeDocDestroy(doc);
 	return 0;
 }

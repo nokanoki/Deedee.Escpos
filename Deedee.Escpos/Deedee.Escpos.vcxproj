@@ -32,7 +32,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="Deedee.Escpos.cpp" />
     <ClCompile Include="Deedee.EscposDocument.cpp" />
+    <ClCompile Include="Deedee.TableFormatter.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="Deedee.EscposDocument.h" />
     <ClInclude Include="Deedee.Escpos.h" />
+    <ClInclude Include="Deedee.TableFormatter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
