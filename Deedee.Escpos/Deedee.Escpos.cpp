@@ -153,6 +153,12 @@ INT32 DEEDEEAPI DeedeeDocSetPrintableAreaWidth(void * doc, int val)
 	return 0;
 }
 
+INT32 DEEDEEAPI DeedeeDocWriteTableFormatter(void * doc, void * table)
+{
+	asDoc(doc)->WriteTableFormatter(asTable(table));
+	return 0;
+}
+
 INT32 DEEDEEAPI DeedeeTableFormatterCreate(void ** table)
 {
 	(*table) = new TableFormatter();

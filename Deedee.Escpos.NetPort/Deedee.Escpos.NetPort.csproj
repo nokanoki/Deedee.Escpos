@@ -49,6 +49,7 @@
     <Compile Include="Printer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QRType.cs" />
+    <Compile Include="TableFormatter.cs" />
     <Compile Include="Underline.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

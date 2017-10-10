@@ -282,6 +282,13 @@ void EscposDocument::SetPrintableAreaWidth(int i)
 
 }
 
+void EscposDocument::WriteTableFormatter(const TableFormatter * formatter)
+{
+	auto bufferSz = formatter->GetBufferSize();
+	auto buf = formatter->GetBufferPointer();
+	this->buffer.insert(this->buffer.end(), buf, buf + bufferSz);
+}
+
 size_t EscposDocument::GetBufferSize() const
 {
 	return this->buffer.size();

@@ -102,6 +102,10 @@ namespace Deedee.Escpos.NetPort
         {
             DeedeeDocWriteQR1(ptr, magnification, (int)correction, s);
         }
+        public void WriteTableFormatter(TableFormatter table)
+        {
+            DeedeeDocWriteTableFormatter(ptr, table.GetHandler());
+        }
         [DllImport("Deedee.Escpos.dll")]
         private static extern Int32 DeedeeDocCreate(ref IntPtr ptr);
         [DllImport("Deedee.Escpos.dll")]
@@ -140,6 +144,7 @@ namespace Deedee.Escpos.NetPort
         private static extern Int32 DeedeeDocWriteQR(IntPtr ptr, int model, int correction, string s);
         [DllImport("Deedee.Escpos.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 DeedeeDocWriteQR1(IntPtr ptr, int magnification, int correction, string s);
-
+        [DllImport("Deedee.Escpos.dll")]
+        private static extern Int32 DeedeeDocWriteTableFormatter(IntPtr doc, IntPtr table);
     }
 }

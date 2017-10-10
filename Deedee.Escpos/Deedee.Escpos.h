@@ -80,7 +80,8 @@ extern "C" {
 	EXPORT INT32 DEEDEEAPI DeedeeDocWriteQR1(void* doc, int magnification, int correction, const wchar_t* str);
 	EXPORT INT32 DEEDEEAPI DeedeeDocSetLeftMargin(void* doc, int val);
 	EXPORT INT32 DEEDEEAPI DeedeeDocSetPrintableAreaWidth(void* doc, int va);
-	
+	EXPORT INT32 DEEDEEAPI DeedeeDocWriteTableFormatter(void* doc, void* table);
+
 	// tableformmater interface
 	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterCreate(void** table);
 	EXPORT INT32 DEEDEEAPI DeedeeTableFormatterDestroy(void* table);

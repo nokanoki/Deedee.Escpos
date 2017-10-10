@@ -88,7 +88,7 @@ int main(int, char)
 	DeedeeDocCut(doc, 1);
 	*/
 	DeedeeDocSetJustificationMode(doc, 1);
-	DeedeeDocWrite(doc, testTable.c_str());
+	DeedeeDocWriteTableFormatter(doc,table);
 
 
 

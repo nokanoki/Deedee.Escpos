@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <Windows.h>
-
+#include "Deedee.TableFormatter.h"
 
 
 class EscposDocument
@@ -36,6 +36,9 @@ public:
 
 	void SetLeftMargin(int i);
 	void SetPrintableAreaWidth(int i);
+
+	void WriteTableFormatter(const TableFormatter* formatter);
+
 
 	size_t GetBufferSize() const;
 	const unsigned char* GetBufferPointer() const;
